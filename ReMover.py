@@ -5,7 +5,6 @@ import tkinter as tk
 from tkinter import filedialog, messagebox
 from configparser import ConfigParser
 
-
 def run_command(command):
     startupinfo = subprocess.STARTUPINFO()
     startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
@@ -15,37 +14,34 @@ def run_command(command):
         return False
     return True
 
-
 def browse_source():
     source_path.set(filedialog.askdirectory())
-
 
 def browse_dest():
     dest_path.set(filedialog.askdirectory())
 
-
 def save_settings():
     config = ConfigParser()
     config['Paths'] = {
-        'source_path_rem': source_path_remr.get(),
+        'source_path_rem': source_path_rem.get(),
         'dest_path_rem': dest_path_rem.get(),
         'source_path_mov': source_path_mov.get(),
         'dest_path_mov': dest_path_mov.get()
     }
-    with open('settings.ini', 'w') as configfile:
+    config_path = os.path.join(os.path.dirname(__file__), 'settings.ini')
+    with open(config_path, 'w') as configfile:
         config.write(configfile)
         print("Settings saved to settings.ini")
 
-
 def load_settings():
     config = ConfigParser()
-    config.read('settings.ini')
+    config_path = os.path.join(os.path.dirname(__file__), 'settings.ini')
+    config.read(config_path)
     if 'Paths' in config:
         source_path_rem.set(config['Paths'].get('source_path_rem', ''))
         dest_path_rem.set(config['Paths'].get('dest_path_rem', ''))
         source_path_mov.set(config['Paths'].get('source_path_mov', ''))
         dest_path_mov.set(config['Paths'].get('dest_path_mov', ''))
-
 
 def execute_rem():
     archive_name = entry_archive_name.get()
@@ -70,7 +66,6 @@ def execute_rem():
     else:
         print("An error occurred during the task.")
 
-
 def execute_mov():
     source = source_path_mov.get()
     dest = dest_path_mov.get()
@@ -91,7 +86,6 @@ def execute_mov():
     messagebox.showinfo("Info", "Files moved successfully! The program will close in 5 seconds.")
     app.after(5000, app.quit)
 
-
 def open_settings():
     settings_window = tk.Toplevel(app)
     settings_window.title("Настройки")
@@ -101,31 +95,26 @@ def open_settings():
     tk.Label(settings_window, text="Откуда:").grid(row=1, column=0)
     entry_source_path_rem = tk.Entry(settings_window, textvariable=source_path_rem)
     entry_source_path_rem.grid(row=1, column=1)
-    tk.Button(settings_window, text="Обзор", command=lambda: source_path_rem.set(filedialog.askdirectory())).grid(
-        row=1, column=2)
+    tk.Button(settings_window, text="Обзор", command=lambda: source_path_rem.set(filedialog.askdirectory())).grid(row=1, column=2)
 
     tk.Label(settings_window, text="Куда:").grid(row=2, column=0)
     entry_dest_path_rem = tk.Entry(settings_window, textvariable=dest_path_rem)
     entry_dest_path_rem.grid(row=2, column=1)
-    tk.Button(settings_window, text="Обзор", command=lambda: dest_path_rem.set(filedialog.askdirectory())).grid(
-        row=2, column=2)
+    tk.Button(settings_window, text="Обзор", command=lambda: dest_path_rem.set(filedialog.askdirectory())).grid(row=2, column=2)
 
     tk.Label(settings_window, text="Move:").grid(row=3, column=1)
 
     tk.Label(settings_window, text="Откуда:").grid(row=4, column=0)
     entry_source_path_mov = tk.Entry(settings_window, textvariable=source_path_mov)
     entry_source_path_mov.grid(row=4, column=1)
-    tk.Button(settings_window, text="Обзор", command=lambda: source_path_mov.set(filedialog.askdirectory())).grid(
-        row=4, column=2)
+    tk.Button(settings_window, text="Обзор", command=lambda: source_path_mov.set(filedialog.askdirectory())).grid(row=4, column=2)
 
     tk.Label(settings_window, text="Куда:").grid(row=5, column=0)
     entry_dest_path_mov = tk.Entry(settings_window, textvariable=dest_path_mov)
     entry_dest_path_mov.grid(row=5, column=1)
-    tk.Button(settings_window, text="Обзор", command=lambda: dest_path_mov.set(filedialog.askdirectory())).grid(
-        row=5, column=2)
+    tk.Button(settings_window, text="Обзор", command=lambda: dest_path_mov.set(filedialog.askdirectory())).grid(row=5, column=2)
 
     tk.Button(settings_window, text="Сохранить", command=save_settings).grid(row=6, column=1)
-
 
 app = tk.Tk()
 app.title("ReMover")
