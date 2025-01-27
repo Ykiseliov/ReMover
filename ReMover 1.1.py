@@ -132,7 +132,7 @@ def open_settings():
 
     tk.Checkbutton(settings_window, text="Автозакрытие через 5 сек", variable=auto_close).grid(row=6, column=1)
 
-    tk.Button(settings_window, text="Сохранить", command=save_settings).grid(row=7, column=1)
+    tk.Button(settings_window, text="Save", command=save_settings).grid(row=7, column=1)
 
 app = tk.Tk()
 app.title("ReMover")
@@ -147,11 +147,11 @@ menu = tk.Menu(app)
 app.config(menu=menu)
 
 file_menu = tk.Menu(menu, tearoff=0)
-menu.add_cascade(label="Файл", menu=file_menu)
-file_menu.add_command(label="Настройки", command=open_settings)
-file_menu.add_command(label="Кол-во", command=count_files)
+menu.add_cascade(label="File", menu=file_menu)
+file_menu.add_command(label="Settings", command=open_settings)
+file_menu.add_command(label="Count", command=count_files)
 
-tk.Label(app, text="Имя архива:").grid(row=0, column=0)
+tk.Label(app, text="Name:").grid(row=0, column=0)
 entry_archive_name = tk.Entry(app)
 entry_archive_name.grid(row=0, column=1)
 
