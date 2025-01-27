@@ -8,5 +8,5 @@
   - minor bug fixes
              
 ### 2025/01/27
-- add count files in Move destination folder
+- add count files in Move destination folder.
  
