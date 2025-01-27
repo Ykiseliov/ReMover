@@ -94,12 +94,12 @@ def execute_mov():
         app.after(5000, app.quit)
 
 def count_files():
-    source = dest_path_mov.get()
-    if not os.path.exists(source):
-        messagebox.showwarning("Warning", "Source path does not exist!")
+    dest = dest_path_mov.get()
+    if not os.path.exists(dest):
+        messagebox.showwarning("Warning", "Destination path does not exist!")
         return
 
-    file_count = len([f for f in os.listdir(source) if os.path.isfile(os.path.join(source, f))])
+    file_count = len([f for f in os.listdir(dest) if os.path.isfile(os.path.join(dest, f))])
     messagebox.showinfo("File Count", f"Количество файлов в папке: {file_count}")
 
 def open_settings():
@@ -157,10 +157,8 @@ entry_archive_name.grid(row=0, column=1)
 
 tk.Button(app, text="Remove", command=execute_rem, width=20, height=2).grid(row=1, column=0)
 tk.Button(app, text="Move", command=execute_mov, width=20, height=2).grid(row=1, column=1)
-tk.Button(app, text="Кол-во", command=count_files, width=20, height=2).grid(row=1, column=2)
 
 # Автоматическая загрузка настроек при запуске
 load_settings()
 
 app.mainloop()
-
